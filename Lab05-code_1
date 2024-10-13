@@ -40,4 +40,65 @@ int main() {
     }
     fclose(file);
     
+    printf("\nMonthly Sales Report for 2024\n\n");
+    printf("Month      Sales\n\n");
+    for (i = 0; i < 12; i++) {
+        printf("%-10s $%.2f\n", months[i], sales[i]);
+    }
+    
+    min_sales = sales[0];
+    max_sales = sales[0];
+    sum_sales = 0;
+    
+    for (i = 0; i < 12; i++) {
+        if (sales[i] < min_sales) {
+            min_sales = sales[i];
+            min_month = i;
+        }
+        if (sales[i] > max_sales) {
+            max_sales = sales[i];
+            max_month = i;
+        }
+        sum_sales += sales[i];
+    }
+    
+    avg_sales = sum_sales / 12;
+
+    printf("Minimum sales: $%.2f (%s)\n", min_sales, months[min_month]);
+    printf("Maximum sales: $%.2f (%s)\n", max_sales, months[max_month]);
+    printf("Average sales: $%.2f\n", avg_sales);
+
+    printf("\nSix-Month moving average report:\n\n");
+    for (i = 0; i <= 6; i++) {
+        float moving_sum = 0;
+        int j;
+        for (j = i; j < i + 6; j++) {
+            moving_sum += sales[j];
+        }
+        float moving_avg = moving_sum / 6;
+        printf("%s-%s $%.2f\n", months[i], months[i + 5], moving_avg);
+    }
+
+    printf("\nSales report (highest to lowest):\n\n");
+
+    for (i = 0; i < 12 - 1; i++) {
+        for (int j = 0; j < 12 - i - 1; j++) {
+            if (sales[j] < sales[j + 1]) {
+                float temp_sales = sales[j];
+                sales[j] = sales[j + 1];
+                sales[j + 1] = temp_sales;
+
+                char *temp_month = months[j];
+                months[j] = months[j + 1];
+                months[j + 1] = temp_month;
+            }
+        }
+    }
+
+    printf("Month      Sales\n\n");
+    for (i = 0; i < 12; i++) {
+        printf("%-10s $%.2f\n", months[i], sales[i]);
+    }
+
+    return 0;
 }
