@@ -6,3 +6,92 @@ Lab: lab05
 Last modified: 10/12/24
 Purpose: Matrices
 */
+
+#include <stdio.h>
+
+#define SIZE 5
+
+// Function to add two matrices
+void addMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE], int result[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            result[i][j] = m1[i][j] + m2[i][j];
+        }
+    }
+}
+
+// Function to multiply two matrices
+void multiplyMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE], int result[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < SIZE; k++) {
+                result[i][j] += m1[i][k] * m2[k][j];
+            }
+        }
+    }
+}
+
+// Function to transpose a matrix
+void transposeMatrix(int matrix[SIZE][SIZE], int result[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            result[j][i] = matrix[i][j];
+        }
+    }
+}
+
+// Function to print a matrix
+void printMatrix(int matrix[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("%4d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+// Gets user input to create matrix
+void inputMatrix(int matrix[SIZE][SIZE], int matrixNumber) {
+    printf("Enter the elements of matrix %d (row-wise):\n", matrixNumber);
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("Matrix [%d][%d]: ", i + 1, j + 1);
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int m1[SIZE][SIZE];
+    int m2[SIZE][SIZE];
+    int result[SIZE][SIZE];
+
+    // Input matrices from user
+    inputMatrix(m1, 1);
+    inputMatrix(m2, 2);
+
+    // Adding matrices
+    printf("Sum of matrices:\n");
+    addMatrices(m1, m2, result);
+    printMatrix(result);
+
+    // Multiplying matrices
+    printf("Product of matrices:\n");
+    multiplyMatrices(m1, m2, result);
+    printMatrix(result);
+
+    // Transposing matrix m1
+    printf("Transpose of matrix 1:\n");
+    transposeMatrix(m1, result);
+    printMatrix(result);
+
+    // Transposing matrix m2
+    printf("Transpose of matrix 2:\n");
+    transposeMatrix(m2, result);
+    printMatrix(result);
+
+    return 0;
+}
